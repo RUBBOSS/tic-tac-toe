@@ -42,7 +42,7 @@ section {
 
 /* Styling for X */
 .cell.x::before {
-  color: #04c0b2;
+  color: #56b3ac;
   content: "X";
 }
 
@@ -89,4 +89,16 @@ section {
 .game--restart:hover {
   background-color: #d86c23;
   color: #fff;
+}
+/* Add transition for X and O */
+.cell.x,
+.cell.o {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Apply animation when X and O are placed */
+.cell.x.placed,
+.cell.o.placed {
+  opacity: 1;
 }

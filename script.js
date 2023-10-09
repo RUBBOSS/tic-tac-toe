@@ -5,9 +5,10 @@ let currentPlayer = "X";
 let gameState = ["", "", "", "", "", "", "", "", ""];
 let gamesPlayed = 0;
 let gameActive = true;
-let xWins = 0;
-let oWins = 0;
+let gameResults = [];
 
+const winningMessage = () => `Player ${currentPlayer} has won!`;
+const drawMessage = () => `Game ended in a draw!`;
 const currentPlayerTurn = () => `It's ${currentPlayer}'s turn - Game ${gamesPlayed + 1}`;
 
 statusDisplay.innerHTML = currentPlayerTurn();
@@ -48,17 +49,12 @@ function handleResultValidation() {
     }
 
     if (roundWon) {
-        if (currentPlayer === "X") {
-            xWins++;
-        } else {
-            oWins++;
-        }
-        gameResultDisplay.innerHTML = `Game ${gamesPlayed + 1} : X -  ${xWins}, O -  ${oWins}`;
+        statusDisplay.innerHTML = winningMessage();
+        gameResults.push(`Game ${gamesPlayed + 1}: Player ${currentPlayer} wins!`);
+        gameResultDisplay.innerHTML = gameResults.join('<br>');
         gamesPlayed++;
         if (gamesPlayed >= 10) {
             statusDisplay.innerHTML = "Maximum games reached!";
-        } else {
-            statusDisplay.innerHTML = currentPlayerTurn();
         }
         gameActive = false;
         return;
@@ -66,12 +62,12 @@ function handleResultValidation() {
 
     const roundDraw = !gameState.includes("");
     if (roundDraw) {
-        gameResultDisplay.innerHTML = `Game ${gamesPlayed + 1}: It's a draw`;
+        statusDisplay.innerHTML = drawMessage();
+        gameResults.push(`Game ${gamesPlayed + 1}: It's a draw!`);
+        gameResultDisplay.innerHTML = gameResults.join('<br>');
         gamesPlayed++;
         if (gamesPlayed >= 10) {
             statusDisplay.innerHTML = "Maximum games reached!";
-        } else {
-            statusDisplay.innerHTML = currentPlayerTurn();
         }
         gameActive = false;
         return;
